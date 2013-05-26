@@ -1,9 +1,9 @@
-#A. Thomer - Text Mining --
+#A. Thomer - modding from spring 2013 text mining code for use in paratext project
 #python 2.7.2 or NLTK won't work
 
 path=("../Text Mining/test")
 
-def asn1(path):
+def ack1(path):
 
         from bs4 import BeautifulSoup
 #        import re
