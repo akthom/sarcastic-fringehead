@@ -1,4 +1,7 @@
 ParatextExtractor: code using BeautifulSoup to extract a few variables from PubMed articles
+
 BeautifulSoupReplaceHyphens: simple script that replaces "-" with "_" in all xml variable names (BUT NOT attributes).  This makes it possible to actually parse the files in python, because python does not recognize "-" as a valid variable character
+
 preprocessedText.txt: first batch of preprocessed text
+
 sampleData: original files used for this test.
