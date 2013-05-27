@@ -1,4 +1,5 @@
 #A. Thomer - modding from spring 2013 text mining code for use in paratext project
+
 #python 2.7.2 or NLTK won't work
 
 path=("../Text Mining/test")
@@ -28,6 +29,11 @@ def ack1(path):
                 
 
                 for a in listing:
+                        soup = BeautifulSoup(open(a))
+                        ID = 
+
+
+                        
                         if a.endswith('.txt'):
                                 abstractNum=abstractNum+1
                                 toWrite=str(a).strip(".txt")#+"|"+abstractNum+"|"
