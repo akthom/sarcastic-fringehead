@@ -13,7 +13,7 @@ def ack1():
         import csv
 
 
-        outfile = open("preprocessedText.txt","a")#, encoding="latin-1") <-- commented out because code was originally written for python 3.2 but then discovered that it broke 2.7
+        outfile = open("preprocessedText3.txt","a")#, encoding="latin-1") <-- commented out because code was originally written for python 3.2 but then discovered that it broke 2.7
         #also, outfile = original, untokenized text.  not really necessary but leaving in the code to show preprocessing step
 #        walk=os.walk(path)
 #        datalist=[]
@@ -38,14 +38,20 @@ def ack1():
                                 for i in soup.findAll():
                                         i.name=i.name.replace("-","_") #replaces hyphens with underscores, which makes some of the processing easier
                                 pmidline= soup.findAll("article_id", attrs={"pub-id-type": "pmid"})
-                                #if pmidline == True:
-#                                        pmid=pmidline[0].contents
-#                                else:
-#                                        pmid=["None"]
-                                pmid=pmidline[0].contents
+
+                        
+                                if not pmidline:   # "Using the implicit booleanness of the empty list is quite pythonic." http://stackoverflow.com/questions/53513/python-what-is-the-best-way-to-check-if-a-list-is-empty
+                                        pmid=["None"]
+                                else:
+                                        pmid=pmidline[0].contents
+
+
+#                                pmid=pmidline[0].contents
                                 ack=soup.ack
+                                abstract=soup.abstract
+                                
                                 print(infile, str(pmid[0]), ack)
-                                w.writerow([filename, pmid[0], ack])
+                                w.writerow([filename, pmid[0], abstract, ack])
 
                        
 #                        if a.endswith('.txt'):
