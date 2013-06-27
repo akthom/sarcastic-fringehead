@@ -21,7 +21,7 @@ def ack1():
 
 #        tokenizer=nltk.data.load('tokenizers/punkt/english.pickle') #modded from http://mailman.uib.no/public/corpora/2007-October/005426.html (thanks, internet!)
 #        summary=[]
-        data=[]
+#        data=[]
         w=csv.writer(outfile)
         w.writerow(["filename ","PMID ", "AcknowledgementsText"])
 
