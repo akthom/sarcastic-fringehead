@@ -41,9 +41,9 @@ def ack1():
                                 ack=soup.ack
                                 abstract=soup.abstract
                                 
-                                print(infile, str(pmid[0]))
+#                                print(infile, str(pmid[0]))
                                 w.writerow([filename, pmid[0], abstract, ack])
-
+        print("done")
         outfile.close()
 
 #                        if a.endswith('.txt'):
