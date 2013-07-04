@@ -12,10 +12,10 @@ def ack1():
         import csv
 
 
-        outfile = open("preprocessedTextASIST.csv","a")#, encoding="latin-1") <-- commented out because code was originally written for python 3.2 but then discovered that it broke 2.7
+        outfile = open("preprocessedTextASIST-FINAL.csv","a")#, encoding="latin-1") <-- commented out because code was originally written for python 3.2 but then discovered that it broke 2.7
 
         w=csv.writer(outfile)
-        w.writerow(["filename ","PMID ", "Abstract ", "AcknowledgementsText"])
+        w.writerow(["filename ","PMID ", "AcknowledgementsText"])
 
 
         for dirname, dirnames, filenames in os.walk('./sampleData'): #also modded from something on stack overflow that I now can't find
@@ -39,10 +39,10 @@ def ack1():
 
 
                                 ack=soup.ack
-                                abstract=soup.abstract
+#                                abstract=soup.abstract
                                 
 #                                print(infile, str(pmid[0]))
-                                w.writerow([filename, pmid[0], abstract, ack])
+                                w.writerow([filename, pmid[0], ack])
         print("done")
         outfile.close()
 
