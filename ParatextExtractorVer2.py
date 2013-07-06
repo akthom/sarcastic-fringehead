@@ -49,15 +49,15 @@ def ack1():
                                 
                                 contribs=soup.findAll("contrib")
                                         
-#this might be kind of goofily written but I don't think it's harming anything or adding to processing time?
+#this is goofily written but I don't think it's harming anything or adding to processing time? but i don't have time to make better now
                                         
                                 if soup.ack: #if there's an ack section then that's the ack
                                         ack=soup.ack
                                 elif not soup.back: #if there's no ack or back matter then no ack
                                         ack=("none") 
-                                elif not soup.back.sec: #
+                                elif not soup.back.sec: #this checking for appropriate back matter sectioning
                                         ack=("none")
-                                else: #otherwise bac
+                                else: #otherwise it's this
                                         ack=soup.back.sec
                                         
 #                                abstract=soup.abstract
