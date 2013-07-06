@@ -2,6 +2,7 @@
 
 #python 2.7.2 or NLTK won't work
 
+tester = "BMC_Bioinformatics_2010_Apr_29_11_220.nxml"
 
 def ack1():
 
@@ -12,13 +13,13 @@ def ack1():
         import csv
 
 
-        outfile = open("preprocessedTextASIST-FINAL.csv","a")#, encoding="latin-1") <-- commented out because code was originally written for python 3.2 but then discovered that it broke 2.7
+        outfile = open("testingForBMC.csv","a")#, encoding="latin-1") <-- commented out because code was originally written for python 3.2 but then discovered that it broke 2.7
 
         w=csv.writer(outfile)
         w.writerow(["filename ","PMID ", "AcknowledgementsText"])
 
 
-        for dirname, dirnames, filenames in os.walk('./sampleData'): #also modded from something on stack overflow that I now can't find
+        for dirname, dirnames, filenames in os.walk('./sampleData/BMC'): #also modded from something on stack overflow that I now can't find
                 
                 
                 for filename in filenames:
@@ -39,63 +40,20 @@ def ack1():
 
 
                                 ack=soup.ack
+#                                if not ack:
+#                                        ack=soup.back.sec.title.parent
+
+#                                if not ack:
+#                                        ack1=["none"]
+#                                else:
+#                                        ack1=soup.back.title.parent.contents
+                                #elif not ack:
+#                                        ack=["None"]
 #                                abstract=soup.abstract
                                 
-#                                print(infile, str(pmid[0]))
+                                print(infile, str(pmid[0]))
                                 w.writerow([filename, pmid[0], ack])
         print("done")
         outfile.close()
 
-#                        if a.endswith('.txt'):
-#                                abstractNum=abstractNum+1
-#                                toWrite=str(a).strip(".txt")#+"|"+abstractNum+"|"
-#                                datalist.append(a)
-#                                print(a)
-#                                infile = os.path.join(dirpath,a)
-#                                pageText = open(infile,'r')#,encoding="latin-1")
-#                                currentFile = pageText.read()
-  		
-#                                for i in iterator1:
-#                                        org=i.group()
-#                                        print(i.group())
-                                        
-#                                        datalist.append(i.group())
-#                                        if str(i.group()) in tally:
-#                                                tally[str(i.group())]=tally[str(i.group())]+1
-#                                        else:
-#                                                tally[str(i.group())]=1
-#                                for i in iterator2:
-#                                        number=1
-#                                        print(i.group())
-#                                        abstract=(i.group())
-#                                        abstract=re.sub('\s+',' ', abstract)
-#                                        sentences=tokenizer.tokenize(abstract)
-#                                        for sentence in sentences:
-#                                                outfile2.write(toWrite+"|"+str(number)+"|"+sentence+"\n")
-#                                                number=number+1
-                                        
-#                                        datalist.append(abstract)
-#                                if str(number) in summary:
-#                                        summary[str(number)]=summary[str(number)]+1
-#                                else:
-#                                        summary[str(number)]=1
-                                
-#                        thingToWrite=str(datalist)
-#                        outfile.write(thingToWrite+'\n')
-#                        datalist=[]
-#                        print (tally)
-#                        print("SENTENCE TOTALS=")
-#                        print(summary)
-
-#                w.writerow([filename, pmid[0], ack])
-
-#        for key, val in summary.items():
-#                w.writerow([str(key)+"|"+str(val)])
-#              datalist=[]
-#        w.writerow(['ORG TOTALS'])
-#        for key,val in tally.items():
-#                w.writerow([str(key)+"|"+str(val)])
-#        outfile.close()
-#        outfile2.close()
-#        summaryreport.close()
 
