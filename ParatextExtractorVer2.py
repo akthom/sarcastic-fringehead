@@ -46,10 +46,8 @@ def ack1():
                                         pmid=pmidline[0].contents
 
                                 #lets count contributors
-                                authors=0
+                                
                                 contribs=soup.findAll("contrib")
-                                for i in contribs:
-                                        authors=authors+1
                                         
 #this might be kind of goofily written but I don't think it's harming anything or adding to processing time?
                                         
@@ -65,7 +63,7 @@ def ack1():
 #                                abstract=soup.abstract
                                 
                                 print(infile, str(pmid[0]))
-                                w.writerow([filename, pmid[0], authors, ack])
+                                w.writerow([filename, pmid[0], len(contribs), ack])
         print("done")
         outfile.close()
 
