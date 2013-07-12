@@ -20,13 +20,13 @@ def ack1():
         import csv
 
 
-        outfile = open("testingForBMC2.csv","a")#, encoding="latin-1") <-- commented out because code was originally written for python 3.2 but then discovered that it broke 2.7
+        outfile = open("finalDataWithAuthors.csv","a")#, encoding="latin-1") <-- commented out because code was originally written for python 3.2 but then discovered that it broke 2.7
 
         w=csv.writer(outfile)
-        w.writerow(["filename ","PMID ", "authorNumber","AcknowledgementsText"])
+        w.writerow(["filename ","PMID ", "NumberOfAuthors","AcknowledgementsText"])
 
 
-        for dirname, dirnames, filenames in os.walk('./sampleData/BMC'): #also modded from something on stack overflow that I now can't find
+        for dirname, dirnames, filenames in os.walk('./sampleData'): #also modded from something on stack overflow that I now can't find
                 
                 
                 for filename in filenames:
