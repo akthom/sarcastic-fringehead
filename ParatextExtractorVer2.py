@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 #A. Thomer - modding from spring 2013 text mining code for use in paratext project
 
 #python 2.7.2 or NLTK won't work
@@ -20,10 +22,10 @@ def ack1():
         import csv
 
 
-        outfile = open("finalDataWithAuthors.csv","a")#, encoding="latin-1") <-- commented out because code was originally written for python 3.2 but then discovered that it broke 2.7
+        outfile = open("AuthorList.csv","a") #, encoding="utf-8") # <-- commented out because code was originally written for python 3.2 but then discovered that it broke 2.7
 
         w=csv.writer(outfile)
-        w.writerow(["filename ","PMID ", "NumberOfAuthors","AcknowledgementsText"])
+        w.writerow(["filename ","PMID ", "NumberOfAuthors","Authors"])
 
 
         for dirname, dirnames, filenames in os.walk('./sampleData'): #also modded from something on stack overflow that I now can't find
@@ -34,7 +36,7 @@ def ack1():
                                 infile=os.path.join(dirname, filename)
 
                                 
-                                soup = BeautifulSoup(open(infile), "lxml") #not sure if xml parsing is actually necessary/helpful
+                                soup = BeautifulSoup(open(infile)) #not sure if xml parsing is actually necessary/helpful
                                 for i in soup.findAll():
                                         i.name=i.name.replace("-","_") #replaces hyphens with underscores, which makes some of the processing easier
                                 pmidline= soup.findAll("article_id", attrs={"pub-id-type": "pmid"})
@@ -48,22 +50,34 @@ def ack1():
                                 #lets count contributors
                                 
                                 contribs=soup.findAll("contrib")
+                                a=0
+                                contribNames=[]
+                                contribString=" "
+
+                                for i in contribs:
+                                        if contribs[a].given_names:
+                                                contribNames.append(str(contribs[a].given_names.get_text().encode("latin-1","ignore"))  + " " +str(contribs[a].surname.get_text().encode("latin-1","ignore")) + " , ")
+                                                contribString=contribString + contribNames[a]
+                                                a=a+1
+#                                        else:
+#                                                a=a+1
                                         
 #this is goofily written but I don't think it's harming anything or adding to processing time? but i don't have time to make better now
+                                        #uncomment below to extract acks - commented out now because i just need author names
                                         
-                                if soup.ack: #if there's an ack section then that's the ack
-                                        ack=soup.ack
-                                elif not soup.back: #if there's no ack or back matter then no ack
-                                        ack=("none") 
-                                elif not soup.back.sec: #this checking for appropriate back matter sectioning
-                                        ack=("none")
-                                else: #otherwise it's this
-                                        ack=soup.back.sec
+#                                if soup.ack: #if there's an ack section then that's the ack
+#                                        ack=soup.ack
+#                                elif not soup.back: #if there's no ack or back matter then no ack
+#                                        ack=("none") 
+#                                elif not soup.back.sec: #this checking for appropriate back matter sectioning
+#                                        ack=("none")
+#                                else: #otherwise it's this
+#                                        ack=soup.back.sec
                                         
 #                                abstract=soup.abstract
                                 
-                                print(infile, str(pmid[0]))
-                                w.writerow([filename, pmid[0], len(contribs), ack])
+                                print(filename, str(pmid[0]), contribString)
+                                w.writerow([filename, pmid[0], len(contribs), contribString])
         print("done")
         outfile.close()
 
