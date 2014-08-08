@@ -1,7 +1,7 @@
 
-#A. Thomer - modding from spring 2013 text mining code for use in paratext project
+#A. Thomer
 
-#python 2.7.2 or NLTK won't work
+#python 2.7.x or NLTK won't work
 
 tester = """
 <!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Archiving and Interchange DTD v1.0 20120330//EN" "JATS-archivearticle1.dtd">
@@ -17,15 +17,24 @@ def ack1():
         from bs4 import BeautifulSoup
         import os
         import csv
+        numAck =0
+        numNoAck=0
+        numOddAck=0
 
 
-        outfile = open("AuthorsPerArticle.csv","a") #, encoding="utf-8") # <-- commented out because code was originally written for python 3.2 but then discovered that it broke 2.7
-
+        outfile = open("technoScienceSubsetExtraction.csv","a") #, encoding="utf-8") # <-- commented out because code was originally written for python 3.2 but then discovered that it broke 2.7
+        logfile = open("technoScienceSubsetLog.csv","a") #for stats
         w=csv.writer(outfile)
-        w.writerow(["filename ","PMID ", "NumberOfAuthors","Authors"])
+        w.writerow(["filename ","PMID ", "NumberOfAuthors","Authors", "ackStmt"])
 
-
-        for dirname, dirnames, filenames in os.walk('./sampleData'): 
+ #       log=csv.writer(logfile)
+ #       log.writerow(["directoryName","numAck","numOddAck","numNoAck"])
+                      
+        for dirname, dirnames, filenames in os.walk('../../Desktop/PubMedOA/technoscienceSubset'): 
+                print (dirname)
+                numAck=0
+                numNoAck=0
+                numOddAck=0
                 
                 
                 for filename in filenames:
@@ -53,7 +62,7 @@ def ack1():
 
                                 for i in contribs:
                                         if contribs[a].given_names:
-                                                contribNames.append(str(contribs[a].given_names.get_text().encode("utf-32","ignore"))  + " " +str(contribs[a].surname.get_text().encode("utf-32","ignore")) + " , ")
+                                                contribNames.append(str(contribs[a].given_names.get_text().encode("latin-1","ignore"))  + " " +str(contribs[a].surname.get_text().encode("latin-1","ignore")) + " , ")
                                                 contribString=contribString + contribNames[a]
                                                 a=a+1
                                         #I know that some sort of unicode SHOULD work for this, but I utf-8 spits out incorrect special characters and utfs-16 and 32 spit out gobblegook.  latin-1 seems like the best approximation of what should be printed but still throws errors; will experiment more to figure out what's actually going on later but for now, this will have to do
@@ -63,18 +72,25 @@ def ack1():
                                         
                                 if soup.ack: #if there's an ack section then that's the ack
                                         ack=soup.ack
+                                        numAck=numAck+1
                                 elif not soup.back: #if there's no ack or back matter then no ack
-                                        ack=("none") 
+                                        ack=("none")
+                                        numNoAck=numNoAck+1 
                                 elif not soup.back.sec: #this checking for appropriate back matter sectioning
                                         ack=("none")
+                                        numNoAck=numNoAck+1 
                                 else: #otherwise it's this
                                         ack=soup.back.sec
-                                        
+                                        numOddAck=numOddAck+1
+                                                                               
 #                                abstract=soup.abstract
                                 
-                                print(filename, str(pmid[0]), contribString)
-                                w.writerow([filename, pmid[0], len(contribs), contribString])
+#                                print(filename, str(pmid[0]), contribString)
+                                w.writerow([filename, pmid[0], len(contribs), contribString, ack])
+                print ("numAck: "+str(numAck)+" numOddAck: " + str(numOddAck) + " numNoAck: " + str(numNoAck)) #making sure i can count which journals have wellformed JATS vs not
+#                log.writerow([dirname,numAck,numOddAck,numNoAck])
         print("done")
         outfile.close()
+#        log.close()
 
 
